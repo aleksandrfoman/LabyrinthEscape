@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 namespace Content.Scripts.PlayerScripts
 {
@@ -5,11 +6,18 @@ namespace Content.Scripts.PlayerScripts
     {
         [SerializeField] private PlayerMovement playerMovement;
         [SerializeField] private PlayerSound playerSound;
+        [SerializeField] private PlayerInteractive playerInteractive;
+
+        private void Awake()
+        {
+            playerInteractive.Init();
+        }
         private void Update()
         {
             playerMovement.Movement();
             playerMovement.Rotation();
             playerSound.FootSteps();
+            playerInteractive.UpdateInteractive();
         }
 
        

@@ -6,13 +6,27 @@ namespace Content.Scripts
 {
     public class Key : MonoBehaviour
     {
+        public bool IsTake=> isTake;
         [SerializeField] private KeySO keySO;
         [SerializeField] private Transform meshTransform;
+        [SerializeField] private AudioSource audioSource;
         [SerializeField] private new Renderer renderer;
+        private bool isTake;
         private void Awake()
         {
             renderer.material.color = keySO.Color;
             StartAnimation();
+        }
+
+        public void TakeKey()
+        {
+            audioSource.Play();
+            isTake = true;
+            StopAnimation();
+            meshTransform.DOScale(Vector3.one * 0.01f, 0.75f).OnComplete(() =>
+            {
+                Destroy(gameObject);
+            });
         }
 
         #region Animation
