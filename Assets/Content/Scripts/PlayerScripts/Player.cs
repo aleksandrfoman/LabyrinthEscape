@@ -9,6 +9,7 @@ namespace Content.Scripts.PlayerScripts
         {
             playerMovement.Movement();
             playerMovement.Rotation();
+            playerSound.FootSteps();
         }
 
        

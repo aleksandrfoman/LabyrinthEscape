@@ -30,6 +30,7 @@ namespace Content.Scripts.PlayerScripts
         {
             int rnd = Random.Range(0, audioStepClips.Length);
             footstepSource.clip = audioStepClips[rnd];
+            footstepSource.pitch = Random.Range(0.9f, 1.1f);
             footstepSource.Play();
         }
     }
