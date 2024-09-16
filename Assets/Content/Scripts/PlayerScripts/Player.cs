@@ -1,18 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
-public class Player : MonoBehaviour
+namespace Content.Scripts.PlayerScripts
 {
-    // Start is called before the first frame update
-    void Start()
+    public class Player : MonoBehaviour
     {
-        
-    }
+        [SerializeField] private PlayerMovement playerMovement;
+        [SerializeField] private PlayerSound playerSound;
+        private void Update()
+        {
+            playerMovement.Movement();
+            playerMovement.Rotation();
+        }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+       
     }
 }
