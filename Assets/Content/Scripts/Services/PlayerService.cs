@@ -1,3 +1,4 @@
+using Content.Scripts.Misc;
 using Content.Scripts.PlayerScripts;
 using UnityEngine;
 using Zenject;
@@ -10,16 +11,19 @@ namespace Content.Scripts.Services
         [SerializeField] private Transform spawnPoint;
         [SerializeField] private Player playerPrefab;
         private Player curPlayer;
+        private GameCanvasService gameCanvasService;
         
         [Inject]
-        private void Construct()
+        private void Construct(GameCanvasService gameCanvasService)
         {
+            this.gameCanvasService = gameCanvasService;
             SpawnPlayer();
         }
 
         private void SpawnPlayer()
         {
             Player player = Instantiate(playerPrefab, spawnPoint.position,spawnPoint.rotation);
+            player.Init(gameCanvasService);
             curPlayer = player;
         }
     }

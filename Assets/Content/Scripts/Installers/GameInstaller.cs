@@ -8,6 +8,9 @@ namespace Content.Scripts.Installers
         public override void InstallBindings()
         {
             BindService<PlayerService>();
+            BindService<LevelService>();
+            BindService<GameService>();
+            BindService<GameCanvasService>();
         }
     }
 }

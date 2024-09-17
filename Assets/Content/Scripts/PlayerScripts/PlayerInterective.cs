@@ -1,4 +1,5 @@
 using System;
+using Content.Scripts.Services;
 using Unity.VisualScripting;
 using UnityEngine;
 namespace Content.Scripts.PlayerScripts
@@ -9,24 +10,40 @@ namespace Content.Scripts.PlayerScripts
         [SerializeField] private float rayDist = 2f;
         [SerializeField] private LayerMask interactiveLayer;
         private Camera cameraMain;
-        
-        public void Init()
+        private GameCanvasService gameCanvasService;
+        public void Init(GameCanvasService gameCanvasService)
         {
             cameraMain = Camera.main;
+            this.gameCanvasService = gameCanvasService;
         }
         public void UpdateInteractive()
         {
             if (Physics.Raycast(cameraMain.transform.position,cameraMain.transform.forward,out RaycastHit hit,rayDist,interactiveLayer))
             {
-                Key curKey = hit.transform.GetComponent<Key>();
-                if (curKey != null)
+                CheckKey(hit);
+            }
+            else
+            {
+                gameCanvasService.EnablePickUp(false);
+            }
+        }
+
+        private void CheckKey(RaycastHit hit)
+        {
+            Key curKey = hit.transform.GetComponent<Key>();
+            if (curKey != null && !curKey.IsTake)
+            {
+                gameCanvasService.EnablePickUp(true);
+                    
+                if (Input.GetKeyDown(KeyCode.E))
                 {
-                    if (Input.GetKeyDown(KeyCode.E) && !curKey.IsTake)
-                    {
-                        curKey.TakeKey();
-                    }
+                    curKey.TakeKey();
                 }
             }
-        } 
+            else
+            {
+                gameCanvasService.EnablePickUp(false);
+            }
+        }
     }
 }

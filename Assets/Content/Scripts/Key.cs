@@ -1,6 +1,8 @@
+using Content.Scripts.Services;
 using Content.Scripts.SO;
 using DG.Tweening;
 using UnityEngine;
+using Zenject;
 
 namespace Content.Scripts
 {
@@ -12,16 +14,28 @@ namespace Content.Scripts
         [SerializeField] private AudioSource audioSource;
         [SerializeField] private new Renderer renderer;
         private bool isTake;
-        private void Awake()
+        
+        private LevelService levelService;
+
+        [Inject]
+        private void Construct(LevelService levelService)
         {
+            this.levelService = levelService;
+            
             renderer.material.color = keySO.Color;
             StartAnimation();
         }
-
+        
         public void TakeKey()
         {
-            audioSource.Play();
             isTake = true;
+            levelService.TakeKey();
+            Deactivate();
+        }
+
+        private void Deactivate()
+        {
+            audioSource.Play();
             StopAnimation();
             meshTransform.DOScale(Vector3.one * 0.01f, 0.75f).OnComplete(() =>
             {

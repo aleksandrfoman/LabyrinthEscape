@@ -1,4 +1,5 @@
 using System;
+using Content.Scripts.Services;
 using UnityEngine;
 namespace Content.Scripts.PlayerScripts
 {
@@ -8,9 +9,9 @@ namespace Content.Scripts.PlayerScripts
         [SerializeField] private PlayerSound playerSound;
         [SerializeField] private PlayerInteractive playerInteractive;
 
-        private void Awake()
+        public void Init(GameCanvasService gameCanvasService)
         {
-            playerInteractive.Init();
+            playerInteractive.Init(gameCanvasService);
         }
         private void Update()
         {
@@ -19,7 +20,5 @@ namespace Content.Scripts.PlayerScripts
             playerSound.FootSteps();
             playerInteractive.UpdateInteractive();
         }
-
-       
     }
 }
