@@ -1,4 +1,3 @@
-using System;
 using Content.Scripts.Services;
 using Content.Scripts.Sounds;
 using UnityEngine;
@@ -6,7 +5,6 @@ namespace Content.Scripts.PlayerScripts
 {
     public class Player : MonoBehaviour
     {
-        public bool IsDead => isDead;
         public PlayerHealth PlayerHealth => playerHealth;
         
         [SerializeField] private PlayerMovement playerMovement;
@@ -14,20 +12,20 @@ namespace Content.Scripts.PlayerScripts
         [SerializeField] private PlayerInteractive playerInteractive;
         [SerializeField] private PlayerHealth playerHealth;
         
-        private bool isDead;
-        private GameCanvasService gameCanvasService;
-        public void Init(GameCanvasService gameCanvasService, AudioService audioService)
+        private GameService gameService;
+        public void Init(GameService gameService,GameCanvasService gameCanvasService, LevelService levelService, AudioService audioService)
         {
-            this.gameCanvasService = gameCanvasService;
+            this.gameService = gameService;
             
-            playerInteractive.Init(gameCanvasService);
+            playerInteractive.Init(gameCanvasService,levelService,gameService);
             playerSound.Init(this,audioService);
             
             playerHealth.OnDead += Dead;
         }
         private void Update()
         {
-            if (isDead) return;
+            if (gameService.GameState != EGameState.Game)
+                return;
             
             playerMovement.Movement();
             playerMovement.Rotation();
@@ -37,7 +35,7 @@ namespace Content.Scripts.PlayerScripts
 
         private void Dead()
         {
-            isDead = true;
+            gameService.LoseGame();
         }
     }
 }

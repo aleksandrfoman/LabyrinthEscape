@@ -1,5 +1,3 @@
-using System;
-using Unity.VisualScripting;
 using UnityEngine;
 using Zenject;
 
@@ -9,12 +7,18 @@ namespace Content.Scripts.Services
     {
         public EGameState GameState => gameState;
         private EGameState gameState;
-        private Timer timer;
+        private LevelService levelService;
+        private GameCanvasService gameCanvasService;
+        private SceneService sceneService;
         
         [Inject]
-        private void Construct()
+        private void Construct(LevelService levelService, GameCanvasService gameCanvasService, SceneService sceneService)
         {
+            this.levelService = levelService;
+            this.gameCanvasService = gameCanvasService;
+            this.sceneService = sceneService;
             
+            StartGame();
         }
 
         private void Update()
@@ -29,36 +33,71 @@ namespace Content.Scripts.Services
                     case EGameState.Pause: 
                         EnablePauseGame(false);
                         break;
-                    case EGameState.Win: break;
-                    case EGameState.Lose: break;
-                    default: throw new ArgumentOutOfRangeException();
                 }
             }
         }
 
+        public void StartGame()
+        {
+            gameState = EGameState.Game;
+            PauseGame(false);
+            levelService.Timer.ActivateTimer(true);
+            Cursor.visible = false;
+            
+            gameCanvasService.OpenPanel(gameState);
+        }
+        
+
         public void WinGame()
         {
+            gameState = EGameState.Win;
+            PauseGame(true);
+            Cursor.visible = true;
             
+            gameCanvasService.OpenPanel(gameState);
+            gameCanvasService.CalculateWinPanel(levelService.FoundKeyTimeList,levelService.Timer.GetElapsedTimeString());
         }
         
         public void LoseGame()
         {
+            gameState = EGameState.Lose;
+            PauseGame(true);
+            Cursor.visible = true;
             
+            gameCanvasService.OpenPanel(gameState);
         }
         
         private void EnablePauseGame(bool value)
         {
-            if (value)
-            {
-                gameState = EGameState.Pause;
-                Time.timeScale = 0;
-            }
-            else
-            {
-                gameState = EGameState.Game;
-                Time.timeScale = 1;
-            }
+            Cursor.visible = value;
+            gameState = value ? EGameState.Pause : EGameState.Game;
+            PauseGame(value);
+            gameCanvasService.OpenPanel(gameState);
         }
+
+        private void PauseGame(bool value)
+        {
+            Time.timeScale = value ? 0 : 1;
+        }
+
+        #region EventButtons
+
+        public void Back()
+        {
+            EnablePauseGame(false);
+        }
+
+        public void Quit()
+        {
+            Application.Quit();
+        }
+        
+        public void Restart()
+        {
+            sceneService.LoadScene(levelService.LevelName);
+        }
+
+        #endregion
     }
 
     public enum EGameState

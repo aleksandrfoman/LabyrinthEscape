@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c9b174ac5d64354f87269094d421efa, type: 3}
   m_Name: KeyPink
   m_EditorClassIdentifier: 
-  KeyType: 2
-  Color: {r: 1, g: 0, b: 0.5956321, a: 1}
+  <KeyType>k__BackingField: 2
+  <Color>k__BackingField: {r: 1, g: 0, b: 0.6417513, a: 1}

@@ -1,4 +1,3 @@
-using Content.Scripts.Misc;
 using Content.Scripts.PlayerScripts;
 using Content.Scripts.Sounds;
 using UnityEngine;
@@ -12,21 +11,27 @@ namespace Content.Scripts.Services
         [SerializeField] private Transform spawnPoint;
         [SerializeField] private Player playerPrefab;
         private Player curPlayer;
+
+        private GameService gameService;
         private GameCanvasService gameCanvasService;
         private AudioService audioService;
+        private LevelService levelService;
         
         [Inject]
-        private void Construct(GameCanvasService gameCanvasService, AudioService audioService)
+        private void Construct(GameService gameService,GameCanvasService gameCanvasService, LevelService levelService, AudioService audioService)
         {
+            this.gameService = gameService;
             this.audioService = audioService;
             this.gameCanvasService = gameCanvasService;
+            this.levelService = levelService;
+            
             SpawnPlayer();
         }
 
         private void SpawnPlayer()
         {
             Player player = Instantiate(playerPrefab, spawnPoint.position,spawnPoint.rotation);
-            player.Init(gameCanvasService, audioService);
+            player.Init(gameService,gameCanvasService,levelService, audioService);
             curPlayer = player;
         }
     }

@@ -11,11 +11,12 @@ namespace Content.Scripts
     public class Key : MonoBehaviour
     {
         public bool IsTake=> isTake;
+        public string TakeTime => takeTime;
         [SerializeField] private KeySO keySO;
         [SerializeField] private Transform meshTransform;
         [SerializeField] private new Renderer renderer;
+        private string takeTime;
         private bool isTake;
-        
         private LevelService levelService;
         private AudioService audioService;
         [Inject]

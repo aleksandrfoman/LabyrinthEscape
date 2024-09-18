@@ -57,7 +57,9 @@ namespace Sounds
             Music = 0,
             PlayerMove = 1,
             Key = 2,
-            SpikeTrap = 3
+            SpikeTrapShow = 3,
+            SpikeTrapHide = 4,
+            PlayerHit = 5,
         }
         #endregion
     }

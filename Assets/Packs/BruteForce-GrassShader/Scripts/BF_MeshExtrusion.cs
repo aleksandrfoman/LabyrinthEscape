@@ -1,8 +1,6 @@
 ﻿  
-using UnityEngine; 
-using System.Collections;
+using UnityEngine;
 using System.Collections.Generic;
-using System.Linq;
 
 [ExecuteInEditMode]
 public class BF_MeshExtrusion : MonoBehaviour {

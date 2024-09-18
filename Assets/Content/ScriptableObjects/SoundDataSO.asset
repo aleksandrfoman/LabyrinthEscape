@@ -33,16 +33,22 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 6cb3eace11794c84db4995aa0a617ad1, type: 3}
   - name: Key
     <SoundType>k__BackingField: 2
-    <Is3dSound>k__BackingField: 1
+    <Is3dSound>k__BackingField: 0
     <IsDisabled>k__BackingField: 0
     <ClipVolume>k__BackingField: 0.25
     clips:
     - {fileID: 8300000, guid: 08b7a111e572f8e44afa93783009cfdf, type: 3}
-  - name: SpikeTrap
+  - name: SpikeTrapShow
     <SoundType>k__BackingField: 3
     <Is3dSound>k__BackingField: 1
     <IsDisabled>k__BackingField: 0
-    <ClipVolume>k__BackingField: 1
+    <ClipVolume>k__BackingField: 0.35
     clips:
     - {fileID: 8300000, guid: f1a2c6086fe90f146932c01a2f68b72e, type: 3}
+  - name: SpikeTrapHide
+    <SoundType>k__BackingField: 4
+    <Is3dSound>k__BackingField: 1
+    <IsDisabled>k__BackingField: 0
+    <ClipVolume>k__BackingField: 0.35
+    clips:
     - {fileID: 8300000, guid: a026d019621ccc64fba8af3ce1e04479, type: 3}

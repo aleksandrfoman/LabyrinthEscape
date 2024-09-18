@@ -1,7 +1,7 @@
 using Content.Scripts.Misc;
 using Content.Scripts.Services;
 using Content.Scripts.Sounds;
-using Zenject;
+
 namespace Content.Scripts.Installers
 {
     public class GameInstaller : MonoBinder

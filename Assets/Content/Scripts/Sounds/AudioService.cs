@@ -27,7 +27,7 @@ namespace Content.Scripts.Sounds
             audioPool.isAutoExpand = true;
         }
         
-        public void PlayFxSound(SoundDataSO.SoundFxType soundFxType, Vector3 position, float pitch = 1f)
+        public void PlayFxSound(SoundDataSO.SoundFxType soundFxType, Vector3 position, float pitch = 1f, float minDist = 1f, float maxDist = 500f)
         {
             SoundDataSO.Sound curSound = soundDataSO.SoundList.Find(x => x.SoundType == soundFxType);
             
@@ -44,25 +44,25 @@ namespace Content.Scripts.Sounds
             }
             else
             {
-                StartCoroutine(AudioPlayFx(curSound.GetAudioClip(), curSound.ClipVolume,curSound.Is3dSound,position, pitch));
+                StartCoroutine(AudioPlayFx(curSound.GetAudioClip(), curSound.ClipVolume,curSound.Is3dSound,position, pitch,minDist,maxDist));
             }
 
         }
 
-        private IEnumerator AudioPlayFx(AudioClip clip, float volume,bool is3DSound, Vector3 position, float pitch)
+        private IEnumerator AudioPlayFx(AudioClip clip, float volume,bool is3DSound, Vector3 position, float pitch, float minDist, float maxDist)
         {
             AudioSourceObject poolSourceObject = audioPool.GetFreeElement();
             if (poolSourceObject == null)
             {
                 AudioSourceObject sourceObject = queueFx.Dequeue();
                 sourceObject.Disable();
-                sourceObject.Init(clip, volume, is3DSound,position,pitch);
+                sourceObject.Init(clip, volume, is3DSound,position,pitch,minDist,maxDist);
                 yield return new WaitForSeconds(clip.length);
                 sourceObject.Disable();
             }
             else
             {
-                poolSourceObject.Init(clip, volume, is3DSound,position,pitch);
+                poolSourceObject.Init(clip, volume, is3DSound,position,pitch,minDist,maxDist);
                 queueFx.Enqueue(poolSourceObject);
                 yield return new WaitForSeconds(clip.length);
                 poolSourceObject.Disable();
