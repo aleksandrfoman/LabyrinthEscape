@@ -1,18 +1,71 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
+using Unity.VisualScripting;
 using UnityEngine;
+using Zenject;
 
-public class GameService : MonoBehaviour
+namespace Content.Scripts.Services
 {
-    // Start is called before the first frame update
-    void Start()
+    public class GameService : MonoBehaviour
     {
+        public EGameState GameState => gameState;
+        private EGameState gameState;
+        private Timer timer;
         
+        [Inject]
+        private void Construct()
+        {
+            
+        }
+
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                switch (gameState)
+                {
+                    case EGameState.Game:
+                        EnablePauseGame(true);
+                        break;
+                    case EGameState.Pause: 
+                        EnablePauseGame(false);
+                        break;
+                    case EGameState.Win: break;
+                    case EGameState.Lose: break;
+                    default: throw new ArgumentOutOfRangeException();
+                }
+            }
+        }
+
+        public void WinGame()
+        {
+            
+        }
+        
+        public void LoseGame()
+        {
+            
+        }
+        
+        private void EnablePauseGame(bool value)
+        {
+            if (value)
+            {
+                gameState = EGameState.Pause;
+                Time.timeScale = 0;
+            }
+            else
+            {
+                gameState = EGameState.Game;
+                Time.timeScale = 1;
+            }
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    public enum EGameState
     {
-        
+        Game,
+        Win,
+        Lose,
+        Pause
     }
 }

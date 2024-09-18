@@ -1,6 +1,8 @@
 using Content.Scripts.Services;
 using Content.Scripts.SO;
+using Content.Scripts.Sounds;
 using DG.Tweening;
+using Sounds;
 using UnityEngine;
 using Zenject;
 
@@ -11,15 +13,15 @@ namespace Content.Scripts
         public bool IsTake=> isTake;
         [SerializeField] private KeySO keySO;
         [SerializeField] private Transform meshTransform;
-        [SerializeField] private AudioSource audioSource;
         [SerializeField] private new Renderer renderer;
         private bool isTake;
         
         private LevelService levelService;
-
+        private AudioService audioService;
         [Inject]
-        private void Construct(LevelService levelService)
+        private void Construct(LevelService levelService, AudioService audioService)
         {
+            this.audioService = audioService;
             this.levelService = levelService;
             
             renderer.material.color = keySO.Color;
@@ -35,9 +37,9 @@ namespace Content.Scripts
 
         private void Deactivate()
         {
-            audioSource.Play();
+            audioService.PlayFxSound(SoundDataSO.SoundFxType.Key,transform.position);
             StopAnimation();
-            meshTransform.DOScale(Vector3.one * 0.01f, 0.75f).OnComplete(() =>
+            transform.DOScale(Vector3.one * 0.01f, 0.75f).OnComplete(() =>
             {
                 Destroy(gameObject);
             });

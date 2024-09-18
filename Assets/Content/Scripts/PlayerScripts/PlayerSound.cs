@@ -1,4 +1,6 @@
 using System;
+using Content.Scripts.Sounds;
+using Sounds;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -8,12 +10,18 @@ namespace Content.Scripts.PlayerScripts
     public class PlayerSound
     {
         [SerializeField] private CharacterController characterController;
-        [SerializeField] private AudioSource footstepSource;
-        [SerializeField] private AudioClip[] audioStepClips;
         [SerializeField] private float walkStepInterval = 0.5f;
         [SerializeField] private float sprintStepInterval = 0.3f;
         [SerializeField] private float velocityThreshold = 0.1f;
         private float nextStepTime = 0f;
+        private AudioService audioService;
+        private Player player;
+        
+        public void Init(Player player,AudioService audioService)
+        {
+            this.player = player;
+            this.audioService = audioService;
+        }
         
         public void FootSteps()
         {
@@ -28,10 +36,8 @@ namespace Content.Scripts.PlayerScripts
 
         private void PlayStepSound()
         {
-            int rnd = Random.Range(0, audioStepClips.Length);
-            footstepSource.clip = audioStepClips[rnd];
-            footstepSource.pitch = Random.Range(0.9f, 1.1f);
-            footstepSource.Play();
+            float pitchRnd = Random.Range(0.9f, 1.1f);
+            audioService.PlayFxSound(SoundDataSO.SoundFxType.PlayerMove,player.transform.position,pitchRnd);
         }
     }
 }

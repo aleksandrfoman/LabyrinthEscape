@@ -1,5 +1,6 @@
 using Content.Scripts.Misc;
 using Content.Scripts.Services;
+using Content.Scripts.Sounds;
 using Zenject;
 namespace Content.Scripts.Installers
 {
@@ -11,6 +12,7 @@ namespace Content.Scripts.Installers
             BindService<LevelService>();
             BindService<GameService>();
             BindService<GameCanvasService>();
+            BindService<AudioService>();
         }
     }
 }

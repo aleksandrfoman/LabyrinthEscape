@@ -1,5 +1,6 @@
 using Content.Scripts.Misc;
 using Content.Scripts.PlayerScripts;
+using Content.Scripts.Sounds;
 using UnityEngine;
 using Zenject;
 
@@ -12,10 +13,12 @@ namespace Content.Scripts.Services
         [SerializeField] private Player playerPrefab;
         private Player curPlayer;
         private GameCanvasService gameCanvasService;
+        private AudioService audioService;
         
         [Inject]
-        private void Construct(GameCanvasService gameCanvasService)
+        private void Construct(GameCanvasService gameCanvasService, AudioService audioService)
         {
+            this.audioService = audioService;
             this.gameCanvasService = gameCanvasService;
             SpawnPlayer();
         }
@@ -23,7 +26,7 @@ namespace Content.Scripts.Services
         private void SpawnPlayer()
         {
             Player player = Instantiate(playerPrefab, spawnPoint.position,spawnPoint.rotation);
-            player.Init(gameCanvasService);
+            player.Init(gameCanvasService, audioService);
             curPlayer = player;
         }
     }
