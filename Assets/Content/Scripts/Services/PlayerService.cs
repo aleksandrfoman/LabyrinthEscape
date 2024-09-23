@@ -36,5 +36,15 @@ namespace Content.Scripts.Services
             player.Init(gameService,gameCanvasService,levelService, audioService,joystickService);
             curPlayer = player;
         }
+
+        public void TakeKey()
+        {
+            curPlayer.PlayerInteractive.TakeKey();
+        }
+
+        public void OpenDoor()
+        {
+            curPlayer.PlayerInteractive.OpenDoor();
+        }
     }
 }

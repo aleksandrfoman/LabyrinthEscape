@@ -57,11 +57,6 @@ MonoBehaviour:
     transformPlayer: {fileID: 3429508018260399360}
   playerSound:
     characterController: {fileID: 7509577443415212854}
-    footstepSource: {fileID: 0}
-    audioStepClips:
-    - {fileID: 8300000, guid: 3a9cd2eed86bb634c9da9b5864798f87, type: 3}
-    - {fileID: 8300000, guid: d1b0c91370b0bcb4fa83f9d084f31dba, type: 3}
-    - {fileID: 8300000, guid: 6cb3eace11794c84db4995aa0a617ad1, type: 3}
     walkStepInterval: 0.5
     sprintStepInterval: 0.35
     velocityThreshold: 0.1

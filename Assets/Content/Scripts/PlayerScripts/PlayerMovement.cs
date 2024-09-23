@@ -30,16 +30,6 @@ namespace Content.Scripts.PlayerScripts
         {
             dirInput = joystickService.DirectionInput;
             dirLook = joystickService.DirectionLook;
-            
-            if (dirInput != Vector2.zero)
-            {
-                dirInput = new Vector2(Input.GetAxis("Vertical"), Input.GetAxis("Horizontal"));
-            }
-
-            if (dirLook != Vector2.zero)
-            {
-                dirLook = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
-            }
         }
         
         public void Movement()

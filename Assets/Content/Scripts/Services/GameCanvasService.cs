@@ -13,8 +13,9 @@ namespace Content.Scripts.Services
         [SerializeField] private LosePanel losePanel;
 
         [Inject]
-        private void Construct(GameService gameService)
+        private void Construct(GameService gameService, PlayerService playerService)
         {
+            gamePanel.Init(playerService);
             pausePanel.Init(gameService);
             winPanel.Init(gameService);
             losePanel.Init(gameService);

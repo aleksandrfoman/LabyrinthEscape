@@ -17,7 +17,7 @@ MonoBehaviour:
   - name: Music
     <SoundType>k__BackingField: 0
     <Is3dSound>k__BackingField: 0
-    <IsDisabled>k__BackingField: 0
+    <IsDisabled>k__BackingField: 1
     <ClipVolume>k__BackingField: 0.1
     clips:
     - {fileID: 8300000, guid: e67180003529c794da15effeffd36dc6, type: 3}
@@ -34,7 +34,7 @@ MonoBehaviour:
   - name: Key
     <SoundType>k__BackingField: 2
     <Is3dSound>k__BackingField: 0
-    <IsDisabled>k__BackingField: 0
+    <IsDisabled>k__BackingField: 1
     <ClipVolume>k__BackingField: 0.25
     clips:
     - {fileID: 8300000, guid: 08b7a111e572f8e44afa93783009cfdf, type: 3}

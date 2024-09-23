@@ -8,6 +8,7 @@ namespace Content.Scripts.PlayerScripts
     {
         [SerializeField] private float rayDist = 2f;
         [SerializeField] private LayerMask interactiveLayer;
+        private Key curKey;
         private Camera cameraMain;
         private GameCanvasService gameCanvasService;
         private LevelService levelService;
@@ -52,7 +53,7 @@ namespace Content.Scripts.PlayerScripts
         }
         private void CheckKey(RaycastHit hit)
         {
-            Key curKey = hit.transform.GetComponent<Key>();
+            curKey = hit.transform.GetComponent<Key>();
             if (curKey != null && !curKey.IsTake)
             {
                 gameCanvasService.EnablePickUp(true);
@@ -66,6 +67,20 @@ namespace Content.Scripts.PlayerScripts
             {
                 gameCanvasService.EnablePickUp(false);
             }
+        }
+
+        public void TakeKey()
+        {
+            if (curKey != null)
+            {
+                curKey.TakeKey();
+            }
+        }
+
+        public void OpenDoor()
+        {
+            gameCanvasService.EnableDoorText(false,false);
+            gameService.WinGame();
         }
     }
 }

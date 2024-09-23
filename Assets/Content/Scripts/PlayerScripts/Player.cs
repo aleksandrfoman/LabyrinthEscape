@@ -5,6 +5,7 @@ namespace Content.Scripts.PlayerScripts
 {
     public class Player : MonoBehaviour
     {
+        public PlayerInteractive PlayerInteractive => playerInteractive;
         public PlayerHealth PlayerHealth => playerHealth;
         
         [SerializeField] private PlayerMovement playerMovement;
