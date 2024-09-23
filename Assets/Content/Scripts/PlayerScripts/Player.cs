@@ -13,12 +13,13 @@ namespace Content.Scripts.PlayerScripts
         [SerializeField] private PlayerHealth playerHealth;
         
         private GameService gameService;
-        public void Init(GameService gameService,GameCanvasService gameCanvasService, LevelService levelService, AudioService audioService)
+        public void Init(GameService gameService,GameCanvasService gameCanvasService, LevelService levelService, AudioService audioService, JoystickService joystickService)
         {
             this.gameService = gameService;
             
             playerInteractive.Init(gameCanvasService,levelService,gameService);
             playerSound.Init(this,audioService);
+            playerMovement.Init(joystickService);
             
             playerHealth.OnDead += Dead;
         }
@@ -27,6 +28,7 @@ namespace Content.Scripts.PlayerScripts
             if (gameService.GameState != EGameState.Game)
                 return;
             
+            playerMovement.UpdateInput();
             playerMovement.Movement();
             playerMovement.Rotation();
             playerSound.FootSteps();

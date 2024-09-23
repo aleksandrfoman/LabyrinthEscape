@@ -14,16 +14,18 @@ namespace Content.Scripts.Services
 
         private GameService gameService;
         private GameCanvasService gameCanvasService;
+        private JoystickService joystickService;
         private AudioService audioService;
         private LevelService levelService;
         
         [Inject]
-        private void Construct(GameService gameService,GameCanvasService gameCanvasService, LevelService levelService, AudioService audioService)
+        private void Construct(GameService gameService,GameCanvasService gameCanvasService, LevelService levelService, AudioService audioService, JoystickService joystickService)
         {
             this.gameService = gameService;
             this.audioService = audioService;
             this.gameCanvasService = gameCanvasService;
             this.levelService = levelService;
+            this.joystickService = joystickService;
             
             SpawnPlayer();
         }
@@ -31,7 +33,7 @@ namespace Content.Scripts.Services
         private void SpawnPlayer()
         {
             Player player = Instantiate(playerPrefab, spawnPoint.position,spawnPoint.rotation);
-            player.Init(gameService,gameCanvasService,levelService, audioService);
+            player.Init(gameService,gameCanvasService,levelService, audioService,joystickService);
             curPlayer = player;
         }
     }

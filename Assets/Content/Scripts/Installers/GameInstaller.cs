@@ -13,6 +13,7 @@ namespace Content.Scripts.Installers
             BindService<GameService>();
             BindService<GameCanvasService>();
             BindService<AudioService>();
+            BindService<JoystickService>();
         }
     }
 }

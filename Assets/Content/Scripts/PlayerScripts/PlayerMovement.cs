@@ -1,4 +1,5 @@
 using System;
+using Content.Scripts.Services;
 using UnityEngine;
 
 namespace Content.Scripts.PlayerScripts
@@ -14,23 +15,48 @@ namespace Content.Scripts.PlayerScripts
         [SerializeField] private Transform cameraHandler;
         [SerializeField] private Transform transformPlayer;
         private float verticalRotation;
+
+        private Vector2 dirInput;
+        private Vector2 dirLook;
+        
+        private JoystickService joystickService;
+        
+        public void Init(JoystickService joystickService)
+        {
+            this.joystickService = joystickService;
+        }
+
+        public void UpdateInput()
+        {
+            dirInput = joystickService.DirectionInput;
+            dirLook = joystickService.DirectionLook;
+            
+            if (dirInput != Vector2.zero)
+            {
+                dirInput = new Vector2(Input.GetAxis("Vertical"), Input.GetAxis("Horizontal"));
+            }
+
+            if (dirLook != Vector2.zero)
+            {
+                dirLook = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
+            }
+        }
         
         public void Movement()
         {
-            float speed = Input.GetKey(KeyCode.LeftShift) ? sprintSpeed : walkSpeed;
-            float vertical = Input.GetAxis("Vertical") * speed;
-            float horizontal = Input.GetAxis("Horizontal") * speed;
-
-            Vector3 dir = new Vector3(horizontal, 0f, vertical);
+            Debug.Log(dirInput);
+            //float speed = Input.GetKey(KeyCode.LeftShift) ? sprintSpeed : walkSpeed;
+            Vector3 dir = new Vector3(dirInput.x*walkSpeed, 0f, dirInput.y*walkSpeed);
             dir = transformPlayer.rotation * dir;
             characterController.SimpleMove(dir);
         }
 
         public void Rotation()
         {
-            float mouseXRotation = Input.GetAxis("Mouse X") * mouseSensitivity;
+            float mouseXRotation = dirLook.x * mouseSensitivity;
             transformPlayer.Rotate(0f,mouseXRotation,0f);
-            verticalRotation -= Input.GetAxis("Mouse Y") * mouseSensitivity;
+            verticalRotation -= dirLook.y * mouseSensitivity;
+            
             verticalRotation = Mathf.Clamp(verticalRotation, -upDownRange, upDownRange);
             cameraHandler.transform.localRotation = Quaternion.Euler(verticalRotation,0,0);
         }
